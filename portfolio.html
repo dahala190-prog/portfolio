@@ -1,0 +1,2272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aryan Dahal - Full Stack Developer Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --tertiary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --accent-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --warm-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --cool-gradient: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+            
+            --text-dark: #1a1a2e;
+            --text-light: #f5f5f5;
+            --shadow-sm: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.2);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-dark);
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body.dark-mode {
+            background: linear-gradient(-45deg, #0f3460, #16213e, #0f3460, #1a5276);
+            background-size: 400% 400%;
+            color: var(--text-light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ============ NAVBAR ============ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow-md);
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        body.dark-mode .navbar {
+            background: rgba(15, 52, 96, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+            cursor: pointer;
+        }
+
+        body.dark-mode .nav-link {
+            color: var(--text-light);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--secondary-gradient);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-3px);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            width: 50px;
+            height: 26px;
+            background: #ccc;
+            border-radius: 13px;
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .theme-toggle.active {
+            background: var(--secondary-gradient);
+        }
+
+        .theme-toggle::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: var(--transition);
+        }
+
+        .theme-toggle.active::after {
+            left: 26px;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-dark);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        body.dark-mode .hamburger span {
+            background: var(--text-light);
+        }
+
+        /* ============ HERO SECTION ============ */
+        .hero {
+            margin-top: 80px;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.3), transparent),
+                        radial-gradient(circle at 80% 80%, rgba(100, 200, 255, 0.3), transparent);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        body.dark-mode .hero-content h1 {
+            background: linear-gradient(135deg, #ffc3a0, #ffafbd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+
+        body.dark-mode .hero-content p {
+            color: #ccc;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            animation: fadeInUp 0.8s ease 0.4s backwards;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            filter: brightness(1.2);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--secondary-gradient);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            font-weight: 700;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .hero-image {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 500px;
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.2));
+        }
+
+        /* ============ SECTIONS ============ */
+        section {
+            padding: 80px 20px;
+            position: relative;
+        }
+
+        section h2 {
+            font-size: 3rem;
+            margin-bottom: 3.5rem;
+            text-align: center;
+            font-weight: 900;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--secondary-gradient);
+            border-radius: 2px;
+        }
+
+        body.dark-mode section {
+            background: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* ============ SERVICES SECTION ============ */
+        .services {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        body.dark-mode .services {
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        body.dark-mode .service-card {
+            background: rgba(30, 50, 80, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--secondary-gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: var(--transition);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        body.dark-mode .service-card h3 {
+            color: #ffc3a0;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        body.dark-mode .service-card p {
+            color: #ccc;
+        }
+
+        /* ============ ABOUT SECTION ============ */
+        .about {
+            background: linear-gradient(to bottom, transparent, rgba(100, 200, 255, 0.1));
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 1.5rem;
+        }
+
+        body.dark-mode .about-text h3 {
+            color: #ffc3a0;
+        }
+
+        .about-text p {
+            color: #555;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        body.dark-mode .about-text p {
+            color: #ddd;
+        }
+
+        .about-image {
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        body.dark-mode .stat-item {
+            background: rgba(255, 195, 160, 0.1);
+            border-left-color: #ffc3a0;
+        }
+
+        .stat-item .number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: var(--secondary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-item p {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        body.dark-mode .stat-item p {
+            color: #ccc;
+        }
+
+        /* ============ SKILLS SECTION ============ */
+        .skills {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        body.dark-mode .skills {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+        }
+
+        .skills section h2 {
+            color: white;
+        }
+
+        .skills section h2::after {
+            background: white;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+
+        .skill-category:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-5px);
+        }
+
+        .skill-category h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+        }
+
+        .skill-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #43e97b, #38f9d7);
+            border-radius: 10px;
+            animation: progress 1.5s ease forwards;
+        }
+
+        @keyframes progress {
+            from { width: 0; }
+            to { width: var(--progress-width); }
+        }
+
+        /* ============ PROJECTS SECTION ============ */
+        .projects {
+            background: linear-gradient(to bottom, transparent, rgba(245, 87, 108, 0.1));
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            group: hover;
+        }
+
+        body.dark-mode .project-card {
+            background: rgba(30, 50, 80, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .project-image {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            background: var(--secondary-gradient);
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .project-overlay-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .project-overlay-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-category {
+            display: inline-block;
+            background: var(--secondary-gradient);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .project-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #667eea;
+        }
+
+        body.dark-mode .project-card h3 {
+            color: #ffc3a0;
+        }
+
+        .project-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        body.dark-mode .project-card p {
+            color: #ccc;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .project-tag {
+            background: #f0f0f0;
+            color: #667eea;
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        body.dark-mode .project-tag {
+            background: rgba(255, 195, 160, 0.2);
+            color: #ffc3a0;
+        }
+
+        /* ============ TESTIMONIALS SECTION ============ */
+        .testimonials {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        body.dark-mode .testimonials {
+            background: linear-gradient(135deg, #1a0033 0%, #330066 100%);
+        }
+
+        .testimonials h2 {
+            color: white;
+        }
+
+        .testimonials h2::after {
+            background: white;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 3rem;
+            opacity: 0.3;
+        }
+
+        .testimonial-text {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .author-info h4 {
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .testimonial-rating {
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ============ BLOG SECTION ============ */
+        .blog {
+            background: linear-gradient(to bottom, transparent, rgba(200, 100, 255, 0.1));
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        body.dark-mode .blog-card {
+            background: rgba(30, 50, 80, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            background: var(--accent-gradient);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .blog-card:hover .blog-image img {
+            transform: scale(1.1);
+        }
+
+        .blog-date {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-category {
+            display: inline-block;
+            background: var(--tertiary-gradient);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            width: fit-content;
+        }
+
+        .blog-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+            color: #667eea;
+        }
+
+        body.dark-mode .blog-card h3 {
+            color: #ffc3a0;
+        }
+
+        .blog-card p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        body.dark-mode .blog-card p {
+            color: #ccc;
+        }
+
+        .blog-read-more {
+            color: #667eea;
+            font-weight: 700;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        body.dark-mode .blog-read-more {
+            color: #ffc3a0;
+        }
+
+        .blog-read-more:hover {
+            gap: 1rem;
+        }
+
+        /* ============ CONTACT SECTION ============ */
+        .contact {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        body.dark-mode .contact {
+            background: linear-gradient(135deg, #0a1428 0%, #0d3b66 100%);
+        }
+
+        .contact h2 {
+            color: white;
+        }
+
+        .contact h2::after {
+            background: white;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+            align-items: start;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .contact-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item p {
+            opacity: 0.9;
+            line-height: 1.7;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 12px 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: var(--transition);
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.25);
+            border-color: white;
+            transform: translateY(-3px);
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* ============ FOOTER ============ */
+        footer {
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
+            color: white;
+            padding: 3rem 20px 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            background: var(--secondary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: white;
+            transform: translateX(5px);
+            display: inline-block;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--secondary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            color: #aaa;
+        }
+
+        /* ============ GAME SECTION ============ */
+        .game-section {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            padding: 80px 20px;
+        }
+
+        body.dark-mode .game-section {
+            background: linear-gradient(135deg, #2c0845 0%, #1a0033 100%);
+        }
+
+        .game-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 900px;
+            margin: 2rem auto;
+            box-shadow: var(--shadow-lg);
+        }
+
+        body.dark-mode .game-container {
+            background: rgba(30, 50, 80, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow-lg);
+                gap: 0;
+                z-index: 999;
+            }
+
+            body.dark-mode .nav-menu {
+                background: rgba(15, 52, 96, 0.95);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-link {
+                padding: 0.75rem 0;
+                border-bottom: 1px solid #eee;
+            }
+
+            body.dark-mode .nav-link {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .hero .container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-image {
+                display: none;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            section h2 {
+                font-size: 2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+
+            .services-grid,
+            .projects-grid,
+            .blog-grid,
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 50px 15px;
+            }
+        }
+
+        /* ============ UTILITIES ============ */
+        .hidden {
+            display: none !important;
+        }
+
+        .scroll-animation {
+            animation: fadeInUp 0.8s ease;
+        }
+
+        /* Loading Animation */
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- ============ NAVBAR ============ -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo" onclick="document.querySelector('html').scrollTop = 0">🚀 ARYAN</div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#blog" class="nav-link">Blog</a></li>
+                <li><a href="#game" class="nav-link">Game</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()"></button>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============ HERO SECTION ============ -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Hi, I'm Aryan Dahal 👨‍💻</h1>
+                <p>Full Stack Developer | Creative Problem Solver | Web Enthusiast</p>
+                <p>Building amazing digital experiences with cutting-edge technologies. Specialized in creating responsive, scalable, and user-friendly web applications.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})">View My Work</button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Get In Touch</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="C:\Users\Dell\Downloads\image-removebg-preview.png" alt="Profile Picture" alt="Profile">
+            </div>
+        </div>
+        <div class="scroll-indicator">⬇️</div>
+    </section>
+
+    <!-- ============ SERVICES SECTION ============ -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Services I Offer</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">💻</div>
+                    <h3>Web Development</h3>
+                    <p>Full-stack web development with modern frameworks like React, Node.js, and MongoDB. Creating responsive, fast, and scalable applications.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>UI/UX Design</h3>
+                    <p>Beautiful and intuitive interface designs that enhance user experience. Focused on accessibility, aesthetics, and functionality.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎮</div>
+                    <h3>Game Development</h3>
+                    <p>Interactive game development for web browsers. Creating engaging and entertaining experiences with HTML5, CSS, and JavaScript.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📱</div>
+                    <h3>Mobile Optimization</h3>
+                    <p>Responsive design and mobile-first approach. Ensuring your application looks great on all devices and screen sizes.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔒</div>
+                    <h3>Security & Performance</h3>
+                    <p>Implementing best practices for web security and optimization. Ensuring fast loading times and robust protection.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🚀</div>
+                    <h3>Web Deployment</h3>
+                    <p>Professional deployment and hosting solutions. Git integration, CI/CD pipelines, and continuous monitoring.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ ABOUT SECTION ============ -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Who I Am</h3>
+                   <p>I'm a Student who just cleraing the 12th.I am just Interested in building responsive and interactive web applications. I love turning ideas into reality through code.</p>
+                    <p>With expertise in AI to create HTML, CSS, JavaScript, and modern frameworks, I create solutions that are not just functional but also beautiful and user-friendly.</p>
+                     <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="number">Beginneer</div>
+                            <p>Years Experience</p>
+                        </div>
+                        <div class="stat-item">
+                            <div class="number">2+</div>
+                            <p>Projects Completed</p>
+                        </div>
+                        <div class="stat-item">
+                            <div class="number">100%</div>
+                            <p>Client Satisfaction</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="C:\Users\Dell\Downloads\image-removebg-preview.png" alt="Profile Picture" alt="About">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ SKILLS SECTION ============ -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2>Skills & Expertise</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Frontend</h3>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>HTML5 & CSS3</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="--progress-width: 95%;"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>JavaScript</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="--progress-width: 90%;"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>React</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="--progress-width: 85%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Backend</h3>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>Node.js</span>
+                            <span>88%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="--progress-width: 88%;"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>Express</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="--progress-width: 85%;"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>MongoDB & SQL</span>
+                            <span>82%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="--progress-width: 82%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Tools & Others</h3>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>Git & GitHub</span>
+                            <span>92%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="--progress-width: 92%;"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>VS Code & DevTools</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="--progress-width: 95%;"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>Figma & Design</span>
+                            <span>80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="--progress-width: 80%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ PROJECTS SECTION ============ -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2>Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/350x250?text=E-Commerce" alt="E-Commerce">
+                        <div class="project-overlay">
+                            <div class="project-overlay-btn">👁️</div>
+                            <div class="project-overlay-btn">🔗</div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-category">E-Commerce</div>
+                        <h3>E-Commerce Platform</h3>
+                        <p>Full-featured shopping platform with payment integration, product management, and user authentication.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">React</span>
+                            <span class="project-tag">Node.js</span>
+                            <span class="project-tag">MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/350x250?text=Task+Manager" alt="Task Manager">
+                        <div class="project-overlay">
+                            <div class="project-overlay-btn">👁️</div>
+                            <div class="project-overlay-btn">🔗</div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-category">Productivity</div>
+                        <h3>Task Management App</h3>
+                        <p>Collaborative task management with real-time updates, team features, and detailed analytics.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">React</span>
+                            <span class="project-tag">Firebase</span>
+                            <span class="project-tag">Material-UI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/350x250?text=Weather+App" alt="Weather">
+                        <div class="project-overlay">
+                            <div class="project-overlay-btn">👁️</div>
+                            <div class="project-overlay-btn">🔗</div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-category">Weather</div>
+                        <h3>Weather Dashboard</h3>
+                        <p>Real-time weather application with location-based forecasts and interactive weather maps.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">JavaScript</span>
+                            <span class="project-tag">Weather API</span>
+                            <span class="project-tag">Maps</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/350x250?text=Social+Network" alt="Social">
+                        <div class="project-overlay">
+                            <div class="project-overlay-btn">👁️</div>
+                            <div class="project-overlay-btn">🔗</div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-category">Social</div>
+                        <h3>Social Network Platform</h3>
+                        <p>Social media platform with messaging, notifications, and user profiles. Built with scalability in mind.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">MERN Stack</span>
+                            <span class="project-tag">WebSocket</span>
+                            <span class="project-tag">JWT</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/350x250?text=Analytics+Dashboard" alt="Analytics">
+                        <div class="project-overlay">
+                            <div class="project-overlay-btn">👁️</div>
+                            <div class="project-overlay-btn">🔗</div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-category">Analytics</div>
+                        <h3>Analytics Dashboard</h3>
+                        <p>Advanced analytics dashboard with real-time data visualization and comprehensive reporting tools.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">React</span>
+                            <span class="project-tag">D3.js</span>
+                            <span class="project-tag">Node.js</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/350x250?text=Joke+Game" alt="Game">
+                        <div class="project-overlay">
+                            <div class="project-overlay-btn">👁️</div>
+                            <div class="project-overlay-btn">🔗</div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-category">Game</div>
+                        <h3>Ultimate Joke Game</h3>
+                        <p>Interactive game with authentication, multiplayer mode, difficulty levels, and leaderboard tracking.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">JavaScript</span>
+                            <span class="project-tag">HTML/CSS</span>
+                            <span class="project-tag">Game API</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ TESTIMONIALS SECTION ============ -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2>What Clients Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-text">Aryan's attention to detail and problem-solving skills are exceptional. He delivered our project ahead of schedule with outstanding quality!</div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JD</div>
+                        <div class="author-info">
+                            <h4>John Doe</h4>
+                            <p>CEO, Tech Startup</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-text">Working with Aryan was a game-changer for our business. His technical expertise and communication skills made the entire process smooth.</div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SM</div>
+                        <div class="author-info">
+                            <h4>Sarah Martinez</h4>
+                            <p>Product Manager, Digital Agency</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-text">Highly professional and innovative. Aryan transformed our outdated website into a modern, fast, and user-friendly platform.</div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RK</div>
+                        <div class="author-info">
+                            <h4>Robert Kumar</h4>
+                            <p>Business Owner</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ BLOG SECTION ============ -->
+    <section id="blog" class="blog">
+        <div class="container">
+            <h2>Latest Blog Posts</h2>
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://via.placeholder.com/350x200?text=Web+Performance" alt="Blog">
+                        <span class="blog-date">Mar 15, 2024</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-category">Performance</div>
+                        <h3>Optimizing Web Performance</h3>
+                        <p>Learn essential techniques to improve your website's loading speed and overall performance. From image optimization to code splitting.</p>
+                        <a href="#" class="blog-read-more">Read More →</a>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://via.placeholder.com/350x200?text=React+Hooks" alt="Blog">
+                        <span class="blog-date">Mar 10, 2024</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-category">React</div>
+                        <h3>Mastering React Hooks</h3>
+                        <p>Deep dive into React Hooks and learn how to use them effectively. From useState to useContext and custom hooks.</p>
+                        <a href="#" class="blog-read-more">Read More →</a>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://via.placeholder.com/350x200?text=Web+Security" alt="Blog">
+                        <span class="blog-date">Mar 5, 2024</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-category">Security</div>
+                        <h3>Web Security Best Practices</h3>
+                        <p>Comprehensive guide to protecting your web applications. Cover common vulnerabilities and how to prevent them.</p>
+                        <a href="#" class="blog-read-more">Read More →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ GAME SECTION ============ -->
+    <section id="game" class="game-section">
+        <div class="container">
+            <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">🎮 Play Ultimate Joke Game</h2>
+            <div class="game-container">
+                <div id="authPanel">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #667eea;">🔐 Dahal Realm Login</h3>
+                    <div style="text-align: center;">
+                        <input id="username" type="text" placeholder="🎭 Username" autocomplete="off" style="width: 100%; margin-bottom: 10px; padding: 12px; border-radius: 10px; border: 2px solid #ffe6c7; font-size: 1rem;">
+                        <input id="password" type="password" placeholder="🔒 Password" style="width: 100%; margin-bottom: 10px; padding: 12px; border-radius: 10px; border: 2px solid #ffe6c7; font-size: 1rem;">
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button class="btn btn-primary" style="flex: 1;" onclick="register()">📝 Register</button>
+                            <button class="btn btn-primary" style="flex: 1;" onclick="login()">🚀 Login</button>
+                        </div>
+                        <p id="authMsg" style="margin-top: 15px; font-weight: 500; color: #ff5e62;"></p>
+                    </div>
+                </div>
+
+                <div id="gamePanel" class="hidden">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+                        <h3 style="margin: 0; color: #667eea;">👋 Welcome, <span id="userDisplay"></span>!</h3>
+                        <button class="btn btn-primary" style="padding: 8px 15px; font-size: 0.9rem;" onclick="logout()">🚪 Logout</button>
+                    </div>
+
+                    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 15px;">
+                        <select id="language" style="padding: 10px 15px; border-radius: 10px; border: 2px solid #ffe6c7; font-size: 0.9rem;">
+                            <option value="en">🇬🇧 English</option>
+                            <option value="ne">🇳🇵 नेपाली</option>
+                        </select>
+                        <select id="category" style="padding: 10px 15px; border-radius: 10px; border: 2px solid #ffe6c7; font-size: 0.9rem;">
+                            <option value="random">🌀 Random</option>
+                            <option value="programming">💻 Programming</option>
+                            <option value="general">🎭 General</option>
+                        </select>
+                        <select id="difficulty" style="padding: 10px 15px; border-radius: 10px; border: 2px solid #ffe6c7; font-size: 0.9rem;">
+                            <option value="easy">🌿 Easy (15s)</option>
+                            <option value="medium" selected>⚡ Medium (10s)</option>
+                            <option value="hard">🔥 Hard (5s)</option>
+                        </select>
+                        <select id="mode" style="padding: 10px 15px; border-radius: 10px; border: 2px solid #ffe6c7; font-size: 0.9rem;">
+                            <option value="single">🎮 Single</option>
+                            <option value="multi">👥 Multiplayer</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; background: rgba(255,235,215,0.7); padding: 14px 20px; border-radius: 10px; margin: 15px 0; font-weight: 600;">
+                        <div style="background: white; padding: 6px 15px; border-radius: 15px;">❤️ Lives: <strong id="lives">3</strong></div>
+                        <div style="background: white; padding: 6px 15px; border-radius: 15px;">🎭 Player: <strong id="player">Player 1</strong></div>
+                        <div style="background: white; padding: 6px 15px; border-radius: 15px;">⏱ Time: <strong id="timer">10</strong>s</div>
+                        <div style="background: white; padding: 6px 15px; border-radius: 15px;">🏆 Score: <strong id="scoreDisplay">0</strong></div>
+                    </div>
+
+                    <div id="joke" style="margin: 20px 0; min-height: 100px; padding: 20px; background: rgba(255, 250, 240, 0.95); border-radius: 10px; font-size: 1.1rem; line-height: 1.5; font-weight: 500; color: #1e2a3a; box-shadow: 0 8px 18px rgba(0,0,0,0.1); border-left: 6px solid #ff9966; text-align: center;">✨ Press "Get Joke" — laughter awaits! ✨</div>
+
+                    <div style="display: flex; gap: 10px; justify-content: center; margin: 15px 0;">
+                        <button class="btn btn-primary" onclick="getJoke()" style="flex: 1;">🎤 Get Joke</button>
+                        <button class="btn btn-primary" onclick="speakJoke()" style="flex: 1;">🔊 Speak</button>
+                    </div>
+
+                    <div style="margin: 15px 0;">
+                        <input id="guess" type="text" placeholder="💡 Guess the punchline..." style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #ffe6c7; font-size: 1rem; margin-bottom: 10px;">
+                        <button class="btn btn-primary" onclick="checkGuess()" style="width: 100%;">✅ Submit Guess</button>
+                    </div>
+
+                    <p id="result" style="font-weight: bold; background: #f4f0e6; border-radius: 10px; padding: 12px; margin-top: 12px; font-size: 0.95rem; min-height: 50px;"></p>
+
+                    <h3 style="text-align: center; margin-top: 20px; color: #667eea;">🏆 Your Hall of Fame</h3>
+                    <div id="leaderboard" style="margin-top: 10px; padding: 12px; background: #fff5ea; border-radius: 10px; max-height: 200px; overflow-y: auto; font-size: 0.9rem; text-align: left; box-shadow: inset 0 0 0 1px #ffdec2;">✨ Your scores will appear here ✨</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CONTACT SECTION ============ -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>aryandahal190@gmail.com<br>dahala190@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+977 9866359438</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div>
+                            <h4>Location</h4>
+                            <p>Hetauda, Nepal<br>Available for Remote Work</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">🕒</div>
+                        <div>
+                            <h4>Availability</h4>
+                            <p>Monday - Friday<br>9:00 AM - 6:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="contact-form" onsubmit="handleContactSubmit(event)">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <input type="text" placeholder="Subject" required>
+                    <textarea placeholder="Your Message..." required></textarea>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#services">Web Development</a></li>
+                    <li><a href="#services">UI/UX Design</a></li>
+                    <li><a href="#services">Game Development</a></li>
+                    <li><a href="#services">Consulting</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Me</h4>
+                <div class="social-links">
+                    <a href="#" class="social-icon">🐙</a>
+                    <a href="#" class="social-icon">💼</a>
+                    <a href="#" class="social-icon">🐦</a>
+                    <a href="#" class="social-icon">📘</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Aryan Dahal. All rights reserved. | Crafted with ❤️ and Code</p>
+        </div>
+    </footer>
+
+    <script>
+        // ============ THEME TOGGLE ============
+        const themeToggle = document.getElementById('themeToggle');
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+        
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+            themeToggle.classList.add('active');
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            themeToggle.classList.toggle('active');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+
+        // ============ MOBILE MENU ============
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // ============ SMOOTH SCROLL ============
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const element = document.querySelector(href);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+
+        // ============ SCROLL ANIMATION ============
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('scroll-animation');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.service-card, .project-card, .testimonial-card, .blog-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ============ CONTACT FORM ============
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            alert('Thank you for reaching out! I will get back to you soon. 🚀');
+            e.target.reset();
+        }
+
+        // ============ GAME CODE ============
+        let currentUser = null;
+        let currentSetup = "";
+        let currentPunchline = "";
+        let activeTimer = null;
+        let livesLeft = 3;
+        let singleScore = 0;
+        let multiScores = {1:0, 2:0};
+        let activePlayer = 1;
+
+        const authPanel = document.getElementById('authPanel');
+        const gamePanel = document.getElementById('gamePanel');
+        const userSpan = document.getElementById('userDisplay');
+        const usernameInp = document.getElementById('username');
+        const passwordInp = document.getElementById('password');
+        const authMsg = document.getElementById('authMsg');
+        const languageSelect = document.getElementById('language');
+        const categorySelect = document.getElementById('category');
+        const difficultySelect = document.getElementById('difficulty');
+        const modeSelect = document.getElementById('mode');
+        const livesSpan = document.getElementById('lives');
+        const playerSpan = document.getElementById('player');
+        const timerSpan = document.getElementById('timer');
+        const jokeDiv = document.getElementById('joke');
+        const guessInput = document.getElementById('guess');
+        const resultPara = document.getElementById('result');
+        const scoreDisplaySpan = document.getElementById('scoreDisplay');
+        const leaderboardDiv = document.getElementById('leaderboard');
+
+        function updateScoreUI() {
+            if (modeSelect.value === 'multi') {
+                scoreDisplaySpan.innerText = `P1:${multiScores[1]} | P2:${multiScores[2]}`;
+            } else {
+                scoreDisplaySpan.innerText = singleScore;
+            }
+        }
+
+        function loadScores() {
+            if (!currentUser) return;
+            const users = JSON.parse(localStorage.getItem("users")) || {};
+            const userData = users[currentUser];
+            if (userData && userData.scores && userData.scores.length) {
+                let bestScores = [...userData.scores].sort((a,b)=>b-a).slice(0,8);
+                leaderboardDiv.innerHTML = bestScores.map((sc,i)=>`<div>🏅 ${i+1}. ${sc} points</div>`).join('');
+            } else {
+                leaderboardDiv.innerHTML = "✨ No scores yet. Play and create history! ✨";
+            }
+        }
+
+        function saveScoreToHistory(finalScore) {
+            if (!currentUser) return;
+            let users = JSON.parse(localStorage.getItem("users")) || {};
+            if (users[currentUser]) {
+                if (!users[currentUser].scores) users[currentUser].scores = [];
+                users[currentUser].scores.push(finalScore);
+                localStorage.setItem("users", JSON.stringify(users));
+                loadScores();
+            }
+        }
+
+        function fullReset(resetMessage = false) {
+            if (activeTimer) clearInterval(activeTimer);
+            if (modeSelect.value === 'multi') {
+                multiScores = {1:0,2:0};
+                activePlayer = 1;
+                playerSpan.innerText = "Player 1";
+            } else {
+                singleScore = 0;
+            }
+            livesLeft = 3;
+            livesSpan.innerText = livesLeft;
+            updateScoreUI();
+            currentPunchline = "";
+            currentSetup = "";
+            const diff = difficultySelect.value;
+            timerSpan.innerText = diff === "easy" ? 15 : (diff === "hard" ? 5 : 10);
+            resultPara.innerText = "";
+            guessInput.value = "";
+            if (!resetMessage) jokeDiv.innerText = "✨ Ready for jokes! Press Get Joke ✨";
+        }
+
+        function loseLife(reasonMsg, showPunchline = true) {
+            if (activeTimer) clearInterval(activeTimer);
+            window.speechSynthesis.cancel();
+            
+            const punchMsg = showPunchline && currentPunchline ? ` 💡 Answer: "${currentPunchline}"` : "";
+            resultPara.innerText = `${reasonMsg}${punchMsg}`;
+            livesLeft--;
+            livesSpan.innerText = livesLeft;
+            
+            if (livesLeft <= 0) {
+                let finalPoints = 0;
+                if (modeSelect.value === 'multi') {
+                    finalPoints = Math.max(multiScores[1], multiScores[2]);
+                    resultPara.innerText += ` 🎮 Game Over! P1:${multiScores[1]} | P2:${multiScores[2]}. ${multiScores[1] > multiScores[2] ? "👑 Player1 wins!" : (multiScores[2] > multiScores[1] ? "👑 Player2 wins!" : "🤝 It's a tie!")}`;
+                } else {
+                    finalPoints = singleScore;
+                    resultPara.innerText += ` 💀 GAME OVER! Your final score: ${finalPoints}`;
+                }
+                if (currentUser && finalPoints > 0) saveScoreToHistory(finalPoints);
+                fullReset(true);
+                jokeDiv.innerText = "💀 Game Over. Press 'Get Joke' to restart! 💀";
+                currentPunchline = "";
+                return;
+            }
+            
+            if (modeSelect.value === 'multi') {
+                activePlayer = activePlayer === 1 ? 2 : 1;
+                playerSpan.innerText = `Player ${activePlayer}`;
+                resultPara.innerText += ` 🔁 Turn → Player ${activePlayer}`;
+            }
+            currentPunchline = "";
+            currentSetup = "";
+            jokeDiv.innerText = "⏳ New joke needed!";
+        }
+
+        function startJokeTimer() {
+            if (activeTimer) clearInterval(activeTimer);
+            let diff = difficultySelect.value;
+            let limit = diff === "easy" ? 15 : (diff === "hard" ? 5 : 10);
+            timerSpan.innerText = limit;
+            activeTimer = setInterval(() => {
+                let curr = parseInt(timerSpan.innerText);
+                if (isNaN(curr)) curr = limit;
+                if (curr <= 1) {
+                    clearInterval(activeTimer);
+                    activeTimer = null;
+                    timerSpan.innerText = "0";
+                    if (currentPunchline) {
+                        loseLife(`⏰ TIME OUT!`, true);
+                    }
+                } else {
+                    timerSpan.innerText = curr - 1;
+                }
+            }, 1000);
+        }
+
+        async function getJoke() {
+            if (activeTimer) clearInterval(activeTimer);
+            window.speechSynthesis.cancel();
+            
+            const category = categorySelect.value;
+            jokeDiv.innerText = "🤣 Loading a joke...";
+            resultPara.innerText = "";
+            guessInput.value = "";
+            
+            let url = "https://official-joke-api.appspot.com/random_joke";
+            if (category !== "random") url = `https://official-joke-api.appspot.com/jokes/${category}/random`;
+            
+            try {
+                let response = await fetch(url);
+                let data = await response.json();
+                let jokeData = category === "random" ? data : (Array.isArray(data) ? data[0] : data);
+                if (!jokeData || !jokeData.setup) throw new Error("invalid");
+                
+                currentSetup = jokeData.setup;
+                currentPunchline = jokeData.punchline;
+                jokeDiv.innerText = `${currentSetup}\n\n🎯 Guess the punchline! 🎯`;
+                startJokeTimer();
+            } catch(err) {
+                jokeDiv.innerText = "⚠️ Error loading joke. Retry? ⚠️";
+                currentPunchline = "";
+            }
+        }
+
+        function speakJoke() {
+            if (!currentSetup) {
+                resultPara.innerText = "⚠️ No joke! Get Joke first.";
+                return;
+            }
+            
+            if (window.speechSynthesis) {
+                window.speechSynthesis.cancel();
+            }
+            
+            const utterance = new SpeechSynthesisUtterance(currentSetup);
+            if (languageSelect.value === 'ne') {
+                utterance.lang = 'ne-NP';
+            } else {
+                utterance.lang = 'en-US';
+            }
+            
+            utterance.rate = 0.9;
+            utterance.pitch = 1.0;
+            utterance.volume = 1;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function checkGuess() {
+            if (!currentPunchline) {
+                resultPara.innerText = "❓ No active joke!";
+                return;
+            }
+            if (activeTimer) clearInterval(activeTimer);
+            
+            const guess = guessInput.value.trim();
+            if (guess === "") {
+                resultPara.innerText = "📝 Enter your guess!";
+                startJokeTimer();
+                return;
+            }
+            
+            const diff = difficultySelect.value;
+            const normalizedGuess = guess.toLowerCase().replace(/[^\w\s]/g, '');
+            const normalizedAnswer = currentPunchline.toLowerCase().replace(/[^\w\s]/g, '');
+            let isCorrect = false;
+            
+            if (diff === "hard") {
+                isCorrect = normalizedGuess === normalizedAnswer;
+            } else {
+                isCorrect = normalizedAnswer.includes(normalizedGuess) || normalizedGuess.includes(normalizedAnswer);
+            }
+            
+            if (isCorrect) {
+                window.speechSynthesis.cancel();
+                let points = diff === "easy" ? 10 : (diff === "hard" ? 30 : 20);
+                resultPara.innerText = `🎉 CORRECT! 🎉 "${currentPunchline}" +${points} pts!`;
+                
+                if (modeSelect.value === "multi") {
+                    multiScores[activePlayer] = (multiScores[activePlayer] || 0) + points;
+                    updateScoreUI();
+                    activePlayer = activePlayer === 1 ? 2 : 1;
+                    playerSpan.innerText = `Player ${activePlayer}`;
+                    resultPara.innerText += ` 🔄 Turn → Player ${activePlayer}`;
+                } else {
+                    singleScore += points;
+                    updateScoreUI();
+                }
+                currentPunchline = "";
+                currentSetup = "";
+                jokeDiv.innerText = "✅ Amazing! Get another joke!";
+                const diffVal = difficultySelect.value;
+                timerSpan.innerText = diffVal === "easy" ? 15 : (diffVal === "hard" ? 5 : 10);
+                guessInput.value = "";
+                if (activeTimer) clearInterval(activeTimer);
+                activeTimer = null;
+            } else {
+                loseLife(`❌ Wrong: "${guess}"`, true);
+                guessInput.value = "";
+            }
+        }
+
+        function register() {
+            const u = usernameInp.value.trim();
+            const p = passwordInp.value.trim();
+            if (!u || !p) { authMsg.innerText = "❌ Need username & password!"; return; }
+            let users = JSON.parse(localStorage.getItem("users")) || {};
+            if (users[u]) { authMsg.innerText = "⚠️ User exists!"; return; }
+            users[u] = { password: p, scores: [] };
+            localStorage.setItem("users", JSON.stringify(users));
+            authMsg.innerText = "✅ Registered! Now Login.";
+            usernameInp.value = "";
+            passwordInp.value = "";
+        }
+
+        function login() {
+            const u = usernameInp.value.trim();
+            const p = passwordInp.value.trim();
+            let users = JSON.parse(localStorage.getItem("users")) || {};
+            if (users[u] && users[u].password === p) {
+                currentUser = u;
+                authPanel.classList.add("hidden");
+                gamePanel.classList.remove("hidden");
+                userSpan.innerText = currentUser;
+                fullReset();
+                loadScores();
+            } else {
+                authMsg.innerText = "❌ Invalid credentials!";
+            }
+        }
+
+        function logout() {
+            location.reload();
+        }
+
+        modeSelect.addEventListener('change', () => {
+            if (currentUser) {
+                fullReset();
+                jokeDiv.innerText = "🎮 Mode changed!";
+            }
+        });
+
+        difficultySelect.addEventListener('change', () => {
+            if (!currentPunchline && activeTimer === null) {
+                const newTime = difficultySelect.value === "easy" ? 15 : (difficultySelect.value === "hard" ? 5 : 10);
+                timerSpan.innerText = newTime;
+            }
+        });
+    </script>
+</body>
+</html>
