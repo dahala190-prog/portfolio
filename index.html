@@ -2277,6 +2277,31 @@
 
   gtag('config', 'G-FFENH1SM68');
 </script>
+    <script>
+    const themeToggle = document.querySelector('.theme-toggle');
+    const htmlElement = document.documentElement;
+
+    // Check if dark mode preference is saved in localStorage
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        htmlElement.classList.add('dark-mode');
+        themeToggle.classList.add('active');
+    }
+
+    // Toggle theme on button click
+    themeToggle.addEventListener('click', toggleTheme);
+
+    function toggleTheme() {
+        htmlElement.classList.toggle('dark-mode');
+        themeToggle.classList.toggle('active');
+
+        // Save preference to localStorage
+        if (htmlElement.classList.contains('dark-mode')) {
+            localStorage.setItem('darkMode', 'enabled');
+        } else {
+            localStorage.setItem('darkMode', 'disabled');
+        }
+    }
+</script>
     </script>
 </body>
 </html>
